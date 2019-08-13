@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CreateWallWithIntermediatePole : MonoBehaviour {
+
+bool wallSelected = false;
 
 bool creating;
 public float maxWallSize = 2.0f;
@@ -19,7 +22,9 @@ List<GameObject> walls = new List<GameObject>();
 	
 	// Update is called once per frame
 	void Update () {
-		getInput();
+		if (!EventSystem.current.IsPointerOverGameObject() && wallSelected) {
+			getInput();
+		}
 	}
 
 	void getInput() {
@@ -61,14 +66,17 @@ List<GameObject> walls = new List<GameObject>();
 // //		startingWall.transform.LookAt(endingWall.transform.position);
 		endingWall.transform.LookAt(walls[0].transform.position);
 		float distance = Vector3.Distance(startingWall.transform.position, endingWall.transform.position);
+		//Debug.Log("DISTANCE" + distance);
 		if (distance >= maxWallSize) {
 			distance = maxWallSize;
+			// wall.GetComponent<Renderer>().bounds.size.z = 1;
+			//Debug.Log("SIZE" + wall.GetComponent<Renderer>().bounds.size.z);
 			wall.transform.position = startingWall.transform.position + distance / 2 * startingWall.transform.forward;
 			wall.transform.rotation = startingWall.transform.rotation;
+			//Debug.Log("SZ: " + wallPrefab.GetComponent<Renderer>().bounds.size.z + "DISTANCE: " + distance + " Z:");
+			//wall.transform.localScale = new Vector3(wall.transform.localScale.x, wall.transform.localScale.y, 0.2f / wallPrefab.GetComponent<Renderer>().bounds.size.z * distance);
 			wall.transform.localScale = new Vector3(wall.transform.localScale.x, wall.transform.localScale.y, distance);
-			//wall.GetComponent<Renderer>().material.mainTexture.wrapMode = TextureWrapMode.Repeat;
 			wall.GetComponent<Renderer>().material.mainTextureScale = new Vector2(distance, wall.transform.localScale.y);
-			//wall.GetComponent<Renderer>().material.SetTextureScale("wallMat", new Vector3(wall.transform.localScale.x, wall.transform.localScale.y, distance));
 			walls.Add(wall);
 			startingWall = (GameObject)Instantiate(polePrefab, startingWall.transform.position + distance * startingWall.transform.forward, Quaternion.identity);
 			walls.Add(startingWall);
@@ -92,5 +100,17 @@ List<GameObject> walls = new List<GameObject>();
 			return hit.point;
 		}
 		return Vector3.zero;
+	}
+
+	private void OnCollisionEnter(Collision other) {
+		Debug.Log("COLLITION");
+	}
+
+	public void selectWall() {
+		wallSelected = true;
+	}
+
+	public void unSelectWall() {
+		wallSelected = false;
 	}
 }
