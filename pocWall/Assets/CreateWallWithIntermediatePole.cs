@@ -62,7 +62,7 @@ List<GameObject> walls = new List<GameObject>();
 		endingWall.transform.LookAt(walls[0].transform.position);
 		float distance = Vector3.Distance(startingWall.transform.position, endingWall.transform.position);
 		if (distance >= maxWallSize) {
-				//distance = maxWallSize;
+			distance = maxWallSize;
 			wall.transform.position = startingWall.transform.position + distance / 2 * startingWall.transform.forward;
 			wall.transform.rotation = startingWall.transform.rotation;
 			wall.transform.localScale = new Vector3(wall.transform.localScale.x, wall.transform.localScale.y, distance);
