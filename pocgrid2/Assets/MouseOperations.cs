@@ -1,15 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace SA
 {
     public class MouseOperations : MonoBehaviour
     {
-        public Transform indicator;
-
         public CameraManager cameraManager;
 
+        public GameObject home;
+        public GameObject cityHall;
+
+        private GameObject building;
+        private bool action = false;
+        private bool placing = false;
         private void Start()
         {
            // cameraManager = Camera.main.transform.GetComponentInParent<CameraManager>();
@@ -17,8 +22,10 @@ namespace SA
 
         void Update()
         {
-            DetectNode();
-            HandleFLoors();
+            if (action) {
+                DetectNode();
+                HandleFLoors();
+            }
         }
 
         void DetectNode()
@@ -30,7 +37,20 @@ namespace SA
                 Node n = GridManager.singleton.GetNode(hit.point);
                 if (n != null)
                 {
-                    indicator.position = n.worldPosition;
+                    Vector3 buildingPosition = n.worldPosition;
+                        //buildingPosition.y = building.GetComponent<Renderer>().bounds.size.y / 2;
+                        buildingPosition.y = 0;
+                    if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()){
+                        building = (GameObject)Instantiate(building, buildingPosition, Quaternion.identity);
+                        placing = true;
+                    } else if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject()) {
+                        //Instantiate(building, n.worldPosition, Quaternion.identity);
+                        placing = false;
+                    } else if (placing) {
+                        Debug.Log("ELSE");
+                        building.transform.position = buildingPosition;
+                    }
+                    
                 }
             }
         }
@@ -69,6 +89,20 @@ namespace SA
                     changedFloor = false;
                 }
             }
+        }
+
+        public void selectHome() {
+            building = home;
+            action = true;
+        }
+
+        public void selectCityHall() {
+            building = cityHall;
+            action = true;
+        }
+
+        public void stopBuilding() {
+            action = false;
         }
     }
 }
