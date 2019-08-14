@@ -12,9 +12,13 @@ namespace SA
         public GameObject home;
         public GameObject cityHall;
 
+        private GameObject selectedBuilding;
         private GameObject building;
         private bool action = false;
         private bool placing = false;
+
+        private Color shaderColor;
+        private Color specularColor;
         private void Start()
         {
            // cameraManager = Camera.main.transform.GetComponentInParent<CameraManager>();
@@ -37,22 +41,64 @@ namespace SA
                 Node n = GridManager.singleton.GetNode(hit.point);
                 if (n != null)
                 {
-                    Vector3 buildingPosition = n.worldPosition;
-                        //buildingPosition.y = building.GetComponent<Renderer>().bounds.size.y / 2;
+                        Vector3 buildingPosition = n.worldPosition;
+                            //buildingPosition.y = building.GetComponent<Renderer>().bounds.size.y / 2;
                         buildingPosition.y = 0;
                     if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()){
-                        building = (GameObject)Instantiate(building, buildingPosition, Quaternion.identity);
+                        building = (GameObject)Instantiate(selectedBuilding, buildingPosition, Quaternion.identity);
                         placing = true;
+                        Renderer rend = building.GetComponent<Renderer>();
+                        shaderColor = rend.material.GetColor("_Color");
+                        // ERROR HERE BELOW
+                       // specularColor = rend.material.GetColor("Specular");
                     } else if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject()) {
                         //Instantiate(building, n.worldPosition, Quaternion.identity);
+                        BuildingCollision bc = building.GetComponent<BuildingCollision>();
+                        if (!bc.inCollision) {
+                            placed();
+                        } else {
+                            Destroy(building);
+                        }
                         placing = false;
                     } else if (placing) {
-                        Debug.Log("ELSE");
                         building.transform.position = buildingPosition;
+                        BuildingCollision bc = building.GetComponent<BuildingCollision>();
+                        if (bc.inCollision) {
+                            wrongPlacement();
+                        } else {
+                            goodPlacement();
+                        }
                     }
                     
                 }
             }
+        }
+
+        void wrongPlacement() {
+            Renderer rend = building.GetComponent<Renderer>();
+
+            rend.material.shader = Shader.Find("_Color");
+            rend.material.SetColor("_Color", Color.red);
+            rend.material.shader = Shader.Find("Specular");
+            rend.material.SetColor("_SpecColor", Color.red);
+        }
+
+        void goodPlacement() {
+            Renderer rend = building.GetComponent<Renderer>();
+
+            rend.material.shader = Shader.Find("_Color");
+            rend.material.SetColor("_Color", Color.green);
+            rend.material.shader = Shader.Find("Specular");
+            rend.material.SetColor("_SpecColor", Color.green);
+        }
+
+        void placed() {
+            Renderer rend = building.GetComponent<Renderer>();
+
+            rend.material.shader = Shader.Find("_Color");
+            rend.material.SetColor("_Color", shaderColor);
+            rend.material.shader = Shader.Find("Specular");
+            rend.material.SetColor("_SpecColor", specularColor);
         }
 
         bool changedFloor;
@@ -92,12 +138,12 @@ namespace SA
         }
 
         public void selectHome() {
-            building = home;
+            selectedBuilding = home;
             action = true;
         }
 
         public void selectCityHall() {
-            building = cityHall;
+            selectedBuilding = cityHall;
             action = true;
         }
 

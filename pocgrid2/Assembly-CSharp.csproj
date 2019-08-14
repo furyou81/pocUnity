@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BuildingCollision.cs" />
      <Compile Include="Assets\CameraManager.cs" />
      <Compile Include="Assets\FogOfWarScript.cs" />
      <Compile Include="Assets\GridManager.cs" />
