@@ -52,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\BuildingCollision.cs" />
+     <Compile Include="Assets\CameraController.cs" />
      <Compile Include="Assets\CameraManager.cs" />
+     <Compile Include="Assets\CameraMove.cs" />
      <Compile Include="Assets\FogOfWarScript.cs" />
      <Compile Include="Assets\GridManager.cs" />
      <Compile Include="Assets\MouseOperations.cs" />
