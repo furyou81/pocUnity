@@ -4,8 +4,17 @@ using UnityEngine;
 
 namespace SA
 {
-	public class BuildingCollision : MonoBehaviour {
+	public class Building : MonoBehaviour {
 
+		public enum BuildingType { Home = 0, CityHall = 1 }
+		private BuildingType type;
+		public BuildingType Type { get { return type; }
+									set { type = value;}
+								}
+		private Vector3 position;
+		public Vector3 Position { get { return position; }
+									set { position = value;}
+								}
 		private bool collision = false;
 		
 		public bool inCollision { get { return collision; }}
@@ -55,9 +64,11 @@ namespace SA
 			Debug.Log("MOUSE OVER");
 			if (MouseOperations.singleton.isRemoving) {
 				Destroy(gameObject);
+				GridManager.singleton.removeBuilding(this);
 			}
 		}
 
+		
 
 	}
 }
