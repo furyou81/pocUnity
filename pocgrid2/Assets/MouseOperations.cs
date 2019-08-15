@@ -7,6 +7,7 @@ namespace SA
 {
     public class MouseOperations : MonoBehaviour
     {
+        public static MouseOperations singleton;
         public CameraManager cameraManager;
 
         public GameObject home;
@@ -16,9 +17,14 @@ namespace SA
         private GameObject building;
         private bool action = false;
         private bool placing = false;
-
+        private bool removing = false;
+        public bool isRemoving { get { return removing; }}
         private Color shaderColor;
         private Color specularColor;
+
+        private void Awake() {
+            singleton = this;
+        }
         private void Start()
         {
            // cameraManager = Camera.main.transform.GetComponentInParent<CameraManager>();
@@ -98,20 +104,31 @@ namespace SA
             rend.material.SetColor("_Color", shaderColor);
             rend.material.shader = Shader.Find("Specular");
             rend.material.SetColor("_SpecColor", specularColor);
+            // to be able to get Raycast for Mouse Events
+            building.layer = 0;
         }
 
         public void selectHome() {
             selectedBuilding = home;
             action = true;
+            removing = false;
         }
 
         public void selectCityHall() {
             selectedBuilding = cityHall;
             action = true;
+            removing = false;
         }
 
         public void stopBuilding() {
             action = false;
+            removing = false;
+        }
+
+        public void removeBuilding() {
+            removing = true;
+            action = false;
+            placing = false;
         }
     }
 }
