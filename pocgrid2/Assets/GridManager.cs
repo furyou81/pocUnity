@@ -6,7 +6,9 @@ namespace SA
 {
     public class GridManager : MonoBehaviour
     {
-        public Vector3Int gridSize = new Vector3Int(30, 10, 30);
+        public Vector2Int gridSizeXZ = new Vector2Int(30, 30);
+
+        public Vector3Int gridSize { get { return new Vector3Int(gridSizeXZ.x, 1, gridSizeXZ.y); }}
         public float scaleXZ = 1;
         public float scaleY = 2;
         public Node[,,] grid;
@@ -22,8 +24,6 @@ namespace SA
             singleton = this;
             nodePrefab = Resources.Load("NodePrefab") as GameObject;
             createGrid();
-            changeFloorActual(gridSize.y / 2);
-          //  CreateCollision();
         }
 
         void createGrid()
@@ -85,59 +85,6 @@ namespace SA
 
             return grid[x, y, z];
         }
-
-        int floorIndex;
-
-        public float getFloorHeight()
-        {
-            return floorIndex * scaleY;
-        }
-
-        public float ChangeFloor(bool increment)
-        {
-            if (increment)
-            {
-                floorIndex++;
-            } else
-            {
-                floorIndex--;
-            }
-            if (floorIndex < 0)
-            {
-                floorIndex = 0;
-            }
-            if (floorIndex > floorParents.Count - 1)
-            {
-                floorIndex = floorParents.Count - 1;
-            }
-
-            return changeFloorActual(floorIndex);
-        }
-
-        float changeFloorActual(int y)
-        {
-            for (int i = 0; i < floorParents.Count; i++)
-            {
-                floorParents[i].gameObject.SetActive(false);
-
-                if (i <= y)
-                {
-                    floorParents[i].gameObject.SetActive(true);
-                }
-            }
-
-            return getFloorHeight();
-        }
-
-       /* void CreateCollision()
-        {
-            GameObject go = new GameObject();
-            BoxCollider box = go.AddComponent<BoxCollider>();
-            Vector3 size = new Vector3((gridSize.z / 2) * scaleXZ, 0.01f, (gridSize.z / 2) * scaleXZ);
-            box.size = size;
-            size.y = 0;
-            go.transform.position = size;
-        }*/
     }
 }
 

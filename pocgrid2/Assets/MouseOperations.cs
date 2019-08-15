@@ -28,7 +28,6 @@ namespace SA
         {
             if (action) {
                 DetectNode();
-                HandleFLoors();
             }
         }
 
@@ -99,42 +98,6 @@ namespace SA
             rend.material.SetColor("_Color", shaderColor);
             rend.material.shader = Shader.Find("Specular");
             rend.material.SetColor("_SpecColor", specularColor);
-        }
-
-        bool changedFloor;
-
-        void HandleFLoors()
-        {
-            float mouseWheel = Input.GetAxis("Mouse ScrollWheel");
-            if (!changedFloor)
-            {
-                if (mouseWheel != 0)
-                {
-                    bool increment = false;
-
-             /*       if (mouseWheel < -0)
-                    {
-
-                    }*/
-
-                    if (mouseWheel > 0)
-                    {
-                        increment = true;
-                    }
-
-                    float height = GridManager.singleton.ChangeFloor(increment);
-                    Vector3 p = cameraManager.mTransform.position;
-                    p.y = height;
-                    cameraManager.mTransform.position = p;
-                    changedFloor = true;
-                }
-            } else
-            {
-                if (mouseWheel == 0)
-                {
-                    changedFloor = false;
-                }
-            }
         }
 
         public void selectHome() {
