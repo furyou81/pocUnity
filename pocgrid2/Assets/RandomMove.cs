@@ -15,7 +15,7 @@ public class RandomMove : MonoBehaviour {
 	void Update () {
 		float x = Random.Range(0.0f, 10.0f);
 		float z = Random.Range(0.0f, 10.0f);
-		Debug.Log("EEEE" + x);
+	//	Debug.Log("EEEE" + x);
 		x *= speed * Time.deltaTime;
 		z *= speed * Time.deltaTime;
 		transform.Translate(x, 0, z);
