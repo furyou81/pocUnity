@@ -40,18 +40,29 @@ namespace SA
             }
         }
 
+        Vector3 snapToGrid(Vector3 point)
+        {
+            Vector3 snapPoint = new Vector3();
+
+            snapPoint.x = Mathf.FloorToInt(point.x / 1);
+            snapPoint.y = 0.5f;
+            snapPoint.z = Mathf.FloorToInt(point.z / 1);
+
+            return snapPoint;
+        }
+
         void DetectNode()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 1000))
             {
-                Node n = GridManager.singleton.GetNode(hit.point);
-                if (n != null)
+                Debug.Log(hit.collider.gameObject.tag);
+                
+                if (GridManager.singleton.hitTerrain(hit))
                 {
-                        Vector3 buildingPosition = n.worldPosition;
-                            //buildingPosition.y = building.GetComponent<Renderer>().bounds.size.y / 2;
-                        buildingPosition.y = 0;
+                        Vector3 buildingPosition = snapToGrid(hit.point);
+
                     if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()){
                         building = (GameObject)Instantiate(selectedBuilding, buildingPosition, Quaternion.identity);
                         placing = true;
@@ -61,8 +72,6 @@ namespace SA
                         // ERROR HERE BELOW
                        // specularColor = rend.material.GetColor("Specular");
                     } else if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject()) {
-                        //Instantiate(building, n.worldPosition, Quaternion.identity);
-                        //Building b = building.GetComponent<Building>();
                         if (!b.inCollision) {
                             placed(hit.point);
                         } else {
@@ -71,7 +80,6 @@ namespace SA
                         placing = false;
                     } else if (placing) {
                         building.transform.position = buildingPosition;
-                        //Building b = building.GetComponent<Building>();
                         if (b.inCollision) {
                             wrongPlacement();
                         } else {

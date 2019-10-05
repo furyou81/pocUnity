@@ -13,10 +13,10 @@ namespace SA
         void Start()
         {
             mTransform = this.transform;
-            GridManager gm = GridManager.singleton;
+           // GridManager gm = GridManager.singleton;
 
-            Node centerNode = gm.GetNode(gm.gridSize.x / 2, gm.gridSize.y / 2, gm.gridSize.z / 2);
-            transform.position = centerNode.worldPosition;
+           // Node centerNode = gm.GetNode(gm.gridSize.x / 2, gm.gridSize.y / 2, gm.gridSize.z / 2);
+           // transform.position = centerNode.worldPosition;
         }
 
         
