@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour {
 		}
 		
 		float scroll = Input.GetAxis("Mouse ScrollWheel");
-		Debug.Log("SCROLL" + scroll);
+		//Debug.Log("SCROLL" + scroll);
 		cameraPosition.y -= scroll * scrollSpeed * Time.deltaTime;
 		if (Input.GetKey("[-]")) {
 			Debug.Log("+");

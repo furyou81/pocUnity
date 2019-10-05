@@ -6,8 +6,8 @@ namespace SA
 {
 	public class Building : MonoBehaviour {
 
-		public enum BuildingType { Home = 0, CityHall = 1 }
-		private BuildingType type;
+		public enum BuildingType { Home = 0, CityHall = 1, WallPole = 2, Wall = 3 }
+		public BuildingType type;
 		public BuildingType Type { get { return type; }
 									set { type = value;}
 								}
@@ -15,9 +15,10 @@ namespace SA
 		public Vector3 Position { get { return position; }
 									set { position = value;}
 								}
+        int nbCol = 0;
 		private bool collision = false;
 		
-		public bool inCollision { get { return collision; }}
+		public bool inCollision { get { return nbCol > 0; }}
 
 		// Use this for initialization
 		void Start () {
@@ -30,16 +31,19 @@ namespace SA
 		}
 
 		private void OnCollisionEnter(Collision col) {
-			if (col.gameObject.name != "Floor" && col.gameObject.name != "Collision") {
-				Debug.Log("COLLISION" + col.gameObject.name);
+			if (col.gameObject.name != "Floor" && col.gameObject.name != "Collision" && col.gameObject.tag != "currentWall") {
+			//	Debug.Log("COLLISION" + col.gameObject.name + " " + col.gameObject.tag);
 				collision = true;
+                nbCol++;
 			}
 		}
 
 		private void OnCollisionExit(Collision col) {
-			if (col.gameObject.name != "Floor" && col.gameObject.name != "Collision") {
-				Debug.Log("COLLISION EXIT" + col.gameObject.name);
+			if (col.gameObject.name != "Floor" && col.gameObject.name != "Collision" && col.gameObject.tag != "currentWall") {
+
+             //   Debug.Log("COLLISION EXIT" + col.gameObject.name);
 				collision = false;
+                nbCol--;
 			}
 		}
 
@@ -49,7 +53,7 @@ namespace SA
 
 		private void OnMouseOver()
 		{
-			Debug.Log("MOUSE OVER");
+			//Debug.Log("MOUSE OVER");
 		}
 
 		private void OnMouseEnter() {

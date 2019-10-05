@@ -21,13 +21,13 @@ namespace SA
 
         public bool hitTerrain(RaycastHit hit)
         {
-            Debug.Log(hit.collider.tag + "TQA" + hit.collider.gameObject.tag);
+            //Debug.Log(hit.collider.tag + "TQA" + hit.collider.gameObject.tag);
             if (hit.collider.gameObject.tag == "terrain")
             {
-                Debug.Log("yes");
+               // Debug.Log("yes");
                 return true;
             }
-            Debug.Log("no");
+           // Debug.Log("no");
             return false;
         }
 

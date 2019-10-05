@@ -76,23 +76,13 @@ public class CreateWall : MonoBehaviour
     {
 
         walls[walls.Count - 1].transform.LookAt(endingWall.transform.position);
-        // 		foreach (GameObject element in walls)
-        // 		{
-        // 			element.transform.LookAt(endingWall.transform.position);
-        // 		}
-        // //		startingWall.transform.LookAt(endingWall.transform.position);
-        endingWall.transform.LookAt(walls[0].transform.position);
+        
         float distance = Vector3.Distance(startingWall.transform.position, endingWall.transform.position);
-        //Debug.Log("DISTANCE" + distance);
         if (distance >= maxWallSize)
         {
             distance = maxWallSize;
-            // wall.GetComponent<Renderer>().bounds.size.z = 1;
-            //Debug.Log("SIZE" + wall.GetComponent<Renderer>().bounds.size.z);
             wall.transform.position = startingWall.transform.position + distance / 2 * startingWall.transform.forward;
             wall.transform.rotation = startingWall.transform.rotation;
-            //Debug.Log("SZ: " + wallPrefab.GetComponent<Renderer>().bounds.size.z + "DISTANCE: " + distance + " Z:");
-            //wall.transform.localScale = new Vector3(wall.transform.localScale.x, wall.transform.localScale.y, 0.2f / wallPrefab.GetComponent<Renderer>().bounds.size.z * distance);
             wall.transform.localScale = new Vector3(wall.transform.localScale.x, wall.transform.localScale.y, distance);
             wall.GetComponent<Renderer>().material.mainTextureScale = new Vector2(distance, wall.transform.localScale.y);
             walls.Add(wall);
@@ -116,7 +106,6 @@ public class CreateWall : MonoBehaviour
 
     Vector3 getWorldPoint()
     {
-       // Camera camera = GetComponent<Camera>();
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))

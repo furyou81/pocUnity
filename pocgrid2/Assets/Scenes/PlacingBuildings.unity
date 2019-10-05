@@ -938,9 +938,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1b0e88773466240b762512ad47f06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraManager: {fileID: 1437909159}
   home: {fileID: 1232766363669618, guid: 2b519101e10d4a74580d4c86ac9e03e6, type: 3}
   cityHall: {fileID: 1275909538635612, guid: 2767c12992d890f44b14f433fe854668, type: 3}
+  maxWallSize: 8
+  polePrefab: {fileID: 1293097205557370, guid: 590cf8a505b574b24b1a83c2f47d6011, type: 3}
+  wallPrefab: {fileID: 1586136500936588, guid: 60ba526ceefc2452dab5e96fa00f5d9e, type: 3}
+  cam: {fileID: 963194227}
 --- !u!114 &542207932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -948,12 +951,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 542207928}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5f1c0fd020d3374a9d7e1e60f9c77f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxWallSize: 2
+  maxWallSize: 14
   polePrefab: {fileID: 1293097205557370, guid: 590cf8a505b574b24b1a83c2f47d6011, type: 3}
   wallPrefab: {fileID: 1586136500936588, guid: 60ba526ceefc2452dab5e96fa00f5d9e, type: 3}
   cam: {fileID: 963194227}
@@ -1809,7 +1812,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 542207932}
+      - m_Target: {fileID: 542207931}
         m_MethodName: selectWall
         m_Mode: 1
         m_Arguments:
