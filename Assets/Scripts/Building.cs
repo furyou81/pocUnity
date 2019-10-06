@@ -65,15 +65,15 @@ namespace SA
 		}
 
 		private void OnMouseEnter() {
-			Debug.Log("MOUSE ENTER");
+			//Debug.Log("MOUSE ENTER");
 		}
 
 		private void OnMouseDown() {
-			Debug.Log("MOUSE DOWN");
+			//Debug.Log("MOUSE DOWN");
 		}
 
 		private void OnMouseUp() {
-			Debug.Log("MOUSE OVER");
+			//Debug.Log("MOUSE OVER");
 			if (MouseOperations.singleton.isRemoving) {
 				Destroy(gameObject);
 				GridManager.singleton.removeBuilding(this);
