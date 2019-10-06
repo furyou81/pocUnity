@@ -273,11 +273,11 @@ namespace SA
                     
                     wall.GetComponent<Renderer>().material.mainTextureScale = new Vector2(distance, wall.transform.localScale.y);
                     //wall.tag = "placed";
-                    if (walls.Count > 2)
+                   /* if (walls.Count > 2)
                     {
                         walls[walls.Count - 2].tag = "placed";
                         walls[walls.Count - 1].tag = "placed";
-                    }
+                    }*/
                     wall.tag = "placed";
                     walls.Add(wall);
                     startingWall.tag = "placed";

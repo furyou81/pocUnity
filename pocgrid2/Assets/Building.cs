@@ -16,14 +16,14 @@ namespace SA
 									set { position = value;}
 								}
         int nbCol = 0;
-		private bool collision = false;
+		//private bool collision = false;
 		
 		public bool inCollision { get { return nbCol > 0; }}
 
 		// Use this for initialization
 		void Start () {
-			
-		}
+            nbCol = 0;
+        }
 		
 		// Update is called once per frame
 		void Update () {
@@ -32,23 +32,31 @@ namespace SA
 
 		private void OnCollisionEnter(Collision col) {
 			if (col.gameObject.name != "Floor" && col.gameObject.name != "Collision" && col.gameObject.tag != "currentWall") {
-			//	Debug.Log("COLLISION" + col.gameObject.name + " " + col.gameObject.tag);
-				collision = true;
-                nbCol++;
-			}
+                //	Debug.Log("COLLISION" + col.gameObject.name + " " + col.gameObject.tag);
+                //	collision = true;
+                Debug.Log("COUNT BEFORE+" + nbCol + type);
+                if (type != BuildingType.WallPole)
+                {
+                    string hhh = "stop";
+                }
+                nbCol = nbCol + 1;
+                Debug.Log("COUNT+" + nbCol);
+            }
 		}
 
 		private void OnCollisionExit(Collision col) {
 			if (col.gameObject.name != "Floor" && col.gameObject.name != "Collision" && col.gameObject.tag != "currentWall") {
 
-             //   Debug.Log("COLLISION EXIT" + col.gameObject.name);
-				collision = false;
-                nbCol--;
+                //   Debug.Log("COLLISION EXIT" + col.gameObject.name);
+                //	collision = false;
+                Debug.Log("COUNT BEFORE+" + nbCol + type);
+                nbCol = nbCol - 1;
+                Debug.Log("COUNT-" + nbCol + type);
 			}
 		}
 
 		private void OnTriggerEnter(Collider other) {
-			Debug.Log("TRIGGER");
+			//Debug.Log("TRIGGER");
 		}
 
 		private void OnMouseOver()
