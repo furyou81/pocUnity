@@ -15,7 +15,7 @@ namespace SA
         private GameObject selectedBuilding;
         private GameObject building;
         private Building.BuildingType buildingType;
-        private bool action = false;
+        private bool buildingIsSelected = false;
         private bool placing = false;
         private bool removing = false;
         public bool isRemoving { get { return removing; }}
@@ -29,7 +29,7 @@ namespace SA
 
         private Building b;
 
-        bool wallSelected = false;
+        bool wallIsSelected = false;
 
         bool creating;
         public float maxWallSize = 2.0f;
@@ -55,8 +55,11 @@ namespace SA
 
         void Update()
         {
-            if (action || wallSelected) {
-                DetectNode();
+            if (buildingIsSelected) {
+                PlaceBuilding();
+            } else if (wallIsSelected)
+            {
+                PlaceWall();
             }
         }
 
@@ -71,7 +74,7 @@ namespace SA
             return snapPoint;
         }
 
-        void DetectNode()
+        void PlaceBuilding()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -81,8 +84,7 @@ namespace SA
                 
                 if (GridManager.singleton.hitTerrain(hit))
                 {
-                    if (action)
-                    {
+                    
                         Vector3 buildingPosition = snapToGrid(hit.point);
 
                         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
@@ -122,10 +124,7 @@ namespace SA
                                 goodPlacement(building);
                             }
                         }
-                    } else if (wallSelected && !EventSystem.current.IsPointerOverGameObject())
-                    {
-                        getInput();
-                    }            
+                        
                 } else if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
                 {
                     Destroy(building);
@@ -181,21 +180,39 @@ namespace SA
             //GridManager.singleton.addBuilding(b);
         }
 
-        void getInput()
+        void PlaceWall()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
-                setStart();
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                setEnd();
-            }
-            else
-            {
-                if (creating)
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 1000))
                 {
-                    adjust();
+                    //Debug.Log(hit.collider.gameObject.tag);
+
+                    if (GridManager.singleton.hitTerrain(hit))
+                    {
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            setStart();
+                        }
+                        else if (Input.GetMouseButtonUp(0))
+                        {
+                            setEnd();
+                        }
+                        else
+                        {
+                            if (creating)
+                            {
+                                adjust();
+                            }
+                        }
+                    } 
+                    else if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
+                    {
+                        Destroy(building);
+                        placing = false;
+                    }
                 }
             }
         }
@@ -335,38 +352,38 @@ namespace SA
         public void selectHome() {
             selectedBuilding = home;
             buildingType = Building.BuildingType.Home;
-            action = true;
+            buildingIsSelected = true;
             removing = false;
-            wallSelected = false;
+            wallIsSelected = false;
         }
 
         public void selectCityHall() {
             selectedBuilding = cityHall;
             buildingType = Building.BuildingType.CityHall;
-            action = true;
+            buildingIsSelected = true;
             removing = false;
-            wallSelected = false;
+            wallIsSelected = false;
         }
 
         public void selectWall()
         {
-            wallSelected = true;
-            action = false;
+            wallIsSelected = true;
+            buildingIsSelected = false;
         }
 
         public void unSelectWall()
         {
-            wallSelected = false;
+            wallIsSelected = false;
         }
 
         public void stopBuilding() {
-            action = false;
+            buildingIsSelected = false;
             removing = false;
         }
 
         public void removeBuilding() {
             removing = true;
-            action = false;
+            buildingIsSelected = false;
             placing = false;
         }
     }

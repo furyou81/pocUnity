@@ -818,8 +818,9 @@ GameObject:
   - component: {fileID: 542207929}
   - component: {fileID: 542207931}
   - component: {fileID: 542207932}
+  - component: {fileID: 542207933}
   m_Layer: 0
-  m_Name: GridManager
+  m_Name: BuildingManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -881,16 +882,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f1c0fd020d3374a9d7e1e60f9c77f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallSelected: 0
-  creating: 0
-  maxWallSize: 14
-  polePrefab: {fileID: 1293097205557370, guid: 590cf8a505b574b24b1a83c2f47d6011, type: 3}
-  startingWall: {fileID: 0}
-  endingWall: {fileID: 0}
-  wallPrefab: {fileID: 1586136500936588, guid: 60ba526ceefc2452dab5e96fa00f5d9e, type: 3}
-  cam: {fileID: 963194227}
-  wall: {fileID: 0}
-  walls: []
+--- !u!114 &542207933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542207928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be1440bbc627b77429024fc02d411f12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  home: {fileID: 1275909538635612, guid: 2767c12992d890f44b14f433fe854668, type: 3}
+  cityHall: {fileID: 1232766363669618, guid: 2b519101e10d4a74580d4c86ac9e03e6, type: 3}
 --- !u!1 &596331025
 GameObject:
   m_ObjectHideFlags: 0
