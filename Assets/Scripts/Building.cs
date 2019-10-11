@@ -8,75 +8,57 @@ namespace SA
 
 		public enum BuildingType { Home = 0, CityHall = 1, WallPole = 2, Wall = 3 }
 		public BuildingType type;
-		public BuildingType Type { get { return type; }
-									set { type = value;}
-								}
+
 		private Vector3 position;
 		public Vector3 Position { get { return position; }
 									set { position = value;}
 								}
-        int nbCol = 0;
-		//private bool collision = false;
-		
-		public bool inCollision { get { return nbCol > 0; }}
 
-		// Use this for initialization
-		void Start () {
-            nbCol = 0;
+        private Vector3 localScale = new Vector3(1,1,1);
+        public Vector3 LocalScale
+        {
+            get { return localScale; }
+            set { localScale = value; }
         }
-		
-		// Update is called once per frame
-		void Update () {
-			
-		}
+
+        private Quaternion rotation = Quaternion.identity;
+        public Quaternion Rotation
+        {
+            get { return rotation; }
+            set { rotation = value; }
+        }
+
+
+        int nbCol = 0;
+        //private bool collision = false;
+        public int NbCol
+        {
+            set { nbCol = value; }
+        }
+
+        public bool inCollision { get { return nbCol != 0; }}
+
 
 		private void OnCollisionEnter(Collision col) {
 			if (col.gameObject.name != "Floor" && col.gameObject.name != "Collision" && col.gameObject.tag != "currentWall") {
-                //	Debug.Log("COLLISION" + col.gameObject.name + " " + col.gameObject.tag);
-                //	collision = true;
-                Debug.Log("COUNT BEFORE+" + nbCol + type);
-                if (type != BuildingType.WallPole)
-                {
-                    string hhh = "stop";
-                }
-                nbCol = nbCol + 1;
-                Debug.Log("COUNT+" + nbCol);
+                nbCol++;
             }
 		}
 
 		private void OnCollisionExit(Collision col) {
 			if (col.gameObject.name != "Floor" && col.gameObject.name != "Collision" && col.gameObject.tag != "currentWall") {
-
-                //   Debug.Log("COLLISION EXIT" + col.gameObject.name);
-                //	collision = false;
-                Debug.Log("COUNT BEFORE+" + nbCol + type);
-                nbCol = nbCol - 1;
-                Debug.Log("COUNT-" + nbCol + type);
+                nbCol--;
 			}
 		}
 
 		private void OnTriggerEnter(Collider other) {
-			//Debug.Log("TRIGGER");
-		}
-
-		private void OnMouseOver()
-		{
-			//Debug.Log("MOUSE OVER");
-		}
-
-		private void OnMouseEnter() {
-			//Debug.Log("MOUSE ENTER");
-		}
-
-		private void OnMouseDown() {
-			//Debug.Log("MOUSE DOWN");
+			//Debug.Log("TRIGGER ENTER");
 		}
 
 		private void OnMouseUp() {
-			//Debug.Log("MOUSE OVER");
-			if (MouseOperations.singleton.isRemoving) {
+			if (SelectBuilding.singleton.isRemoving) {
 				Destroy(gameObject);
-				GridManager.singleton.removeBuilding(this);
+                GameStateManager.singleton.RemoveBuilding(this);
 			}
 		}
 

@@ -5,10 +5,12 @@ using UnityEngine;
 namespace SA
 {
 	public static class SaveGame {
-		static string path = "/Users/lfujimot/pocUnity/test.tt";
-		// static string path = Application.persistentDataPath + "/buildings.building";
-		public static void saveGame(Building[] buildings) {
-			BinaryFormatter formatter = new BinaryFormatter();
+        
+		static string path = Application.dataPath + "/save.txt";
+
+		public static void SaveBuildingState(Building[] buildings) {
+            Debug.Log("PATH: " + Application.dataPath);
+            BinaryFormatter formatter = new BinaryFormatter();
 			FileStream stream = new FileStream(path, FileMode.Create);
 			Debug.Log("SIZE" + buildings.Length);
 			BuildingData[] d = new BuildingData[buildings.Length];
@@ -23,7 +25,7 @@ namespace SA
 			stream.Close();
 		}
 
-		public static BuildingData[] loadGame() {
+		public static BuildingData[] LoadBuildingState() {
 			if (File.Exists(path)) {
 				BinaryFormatter formatter = new BinaryFormatter();
 				FileStream stream = new FileStream(path, FileMode.Open);
