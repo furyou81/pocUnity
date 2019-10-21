@@ -40,13 +40,13 @@ namespace SA
 
 
 		private void OnCollisionEnter(Collision col) {
-			if (col.gameObject.name != "Floor" && col.gameObject.name != "Collision" && col.gameObject.tag != "currentWall") {
+			if (col.gameObject.tag != "terrain" && col.gameObject.name != "Collision" && col.gameObject.tag != "currentWall") {
                 nbCol++;
             }
 		}
 
 		private void OnCollisionExit(Collision col) {
-			if (col.gameObject.name != "Floor" && col.gameObject.name != "Collision" && col.gameObject.tag != "currentWall") {
+			if (col.gameObject.tag != "terrain" && col.gameObject.name != "Collision" && col.gameObject.tag != "currentWall") {
                 nbCol--;
 			}
 		}

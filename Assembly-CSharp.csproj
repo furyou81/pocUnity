@@ -63,16 +63,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BuildingData.cs" />
-    <Compile Include="Assets\CameraController.cs" />
-    <Compile Include="Assets\GameStateManager.cs" />
-    <Compile Include="Assets\MouseOperations.cs" />
-    <Compile Include="Assets\PlaceBuilding.cs" />
-    <Compile Include="Assets\PlaceScript.cs" />
-    <Compile Include="Assets\PlaceWall.cs" />
-    <Compile Include="Assets\SaveGame.cs" />
-    <Compile Include="Assets\Scripts\Building.cs" />
-    <Compile Include="Assets\SelectBuilding.cs" />
+    <Compile Include="Assets\Scripts\buildings\Building.cs" />
+    <Compile Include="Assets\Scripts\buildings\BuildingData.cs" />
+    <Compile Include="Assets\Scripts\buildings\CameraController.cs" />
+    <Compile Include="Assets\Scripts\buildings\GameStateManager.cs" />
+    <Compile Include="Assets\Scripts\buildings\MouseOperations.cs" />
+    <Compile Include="Assets\Scripts\buildings\PlaceBuilding.cs" />
+    <Compile Include="Assets\Scripts\buildings\PlaceScript.cs" />
+    <Compile Include="Assets\Scripts\buildings\PlaceWall.cs" />
+    <Compile Include="Assets\Scripts\buildings\SaveGame.cs" />
+    <Compile Include="Assets\Scripts\buildings\SelectBuilding.cs" />
     <None Include="Assets\save.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/DELL/Desktop/CLONE/pocgrid2/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
