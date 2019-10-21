@@ -186,7 +186,8 @@ namespace SA
                 currentTime = 0F;
             }
             currentTime += Time.deltaTime;
-            if (currentTime > 0.2F)
+
+            if (currentTime > 0.3F)
             {
 
                 if (distance >= maxWallSize && !poleBuildingComponent.inCollision && !wallBuildingComponent.inCollision)

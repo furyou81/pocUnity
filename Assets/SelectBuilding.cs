@@ -59,6 +59,7 @@ namespace SA
         public void StopBuilding()
         {
             buildingIsSelected = false;
+            wallIsSelected = false;
             removing = false;
         }
 
@@ -66,6 +67,7 @@ namespace SA
         {
             removing = true;
             buildingIsSelected = false;
+            wallIsSelected = false;
         }
     }
 

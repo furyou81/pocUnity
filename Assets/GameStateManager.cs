@@ -13,11 +13,9 @@ namespace SA
 
         public void AddBuilding(Building b) {
             buildings.Add(b);
-            Debug.Log("ADDED" + buildings.Count);
         }
 
         public void RemoveBuilding(Building b) {
-            Debug.Log("RE?OVED" + buildings.Count);
             buildings.Remove(b);
         }
 
@@ -46,12 +44,10 @@ namespace SA
         }
 
         public void SaveGameState() {
-            Debug.Log("TOTAL" + buildings.Count);
 			SaveGame.SaveBuildingState(buildings.ToArray());
 		}
 
         public void RestoreGameState() {
-            Debug.Log("RESTORE" + buildings.Count);
             BuildingData[] buildingsData = SaveGame.LoadBuildingState();
             buildings.Clear();
             foreach (BuildingData savedBuilding in buildingsData)
@@ -68,6 +64,10 @@ namespace SA
                     Vector3 localScale = new Vector3(savedBuilding.localScale[0], savedBuilding.localScale[1], savedBuilding.localScale[2]);
                     Quaternion rotation = new Quaternion(savedBuilding.rotation[0], savedBuilding.rotation[1], savedBuilding.rotation[2], savedBuilding.rotation[3]);
                     GameObject go = (GameObject)Instantiate(prefab, position, Quaternion.identity);
+                    if ((Building.BuildingType)savedBuilding.type == Building.BuildingType.Wall || (Building.BuildingType)savedBuilding.type == Building.BuildingType.WallPole)
+                    {
+                        go.tag = "placed";
+                    }
                     go.transform.localScale = localScale;
                     go.transform.rotation = rotation;
                     go.layer = 0;
